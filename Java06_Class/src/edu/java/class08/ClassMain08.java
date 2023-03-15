@@ -14,7 +14,10 @@ public class ClassMain08 {
 		account.withdraw(9000);
 		account.printInfo();
 		
-		account.transfer(account2, 5000);
+		System.out.println("--------------------");
+		if(account.transfer(account2, 5000)) System.out.println("이체 성공");
+		else System.out.println("이체 실패");
+		
 		account.printInfo();
 		account2.printInfo();
 	}

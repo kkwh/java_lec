@@ -37,7 +37,7 @@ public class Account {
     public double withdraw(double amount) {
     	balance -= amount;
     	return balance;
-    }
+    } 
     
     /**
      * 이체(transfer).
@@ -47,7 +47,7 @@ public class Account {
      * @return true.
      */
     public boolean transfer(Account to, double amount) {   	
-    	balance -= amount;
+    	withdraw(amount);
     	to.deposit(amount);
     	return true;
     }
