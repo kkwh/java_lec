@@ -9,6 +9,8 @@ public class ContactMain01 {
 	// field 
 	private Contact[] contacts = new Contact[MAX_LENGTH]; // 연락처를 저장할 배열.
 	private int count = 0; // 연락처 배열에 현재까지 저장된 연락처의 개수. 배열에 저장될 때마다 값 증가.
+	
+
 	private Scanner scanner = new Scanner(System.in); // 입력 도구.
 	
 	public static void main(String[] args) {
@@ -33,13 +35,13 @@ public class ContactMain01 {
 				app.showAllList();
 				break;
 			case 3: // 배열의 인덱스로 검색하기
-				app.indexSearch();
+				app.searchIndex();
 				break;
 			case 4: // 연락처 이름/전화번호/이메일 정보 수정하기
 				app.reviseInfo();
 				break;
 			case 5: // 배열의 인덱스로 연락처 삭제하기.
-				app.IndexDelete();
+				app.deleteContactByIndex();
 				break;
 			default:
 				System.out.println("메인 메뉴 번호를 확인하세요.");
@@ -50,7 +52,7 @@ public class ContactMain01 {
 	}
 	
 	public void insertNewContact() {
-		if(count >= 5) {
+		if(count == MAX_LENGTH) {
 			System.out.println("저장가능한 용량을 초과하였습니다.");
 			return;
 		}
@@ -83,10 +85,12 @@ public class ContactMain01 {
 		}
 	}
 	
-	public void indexSearch() {
+	public void searchIndex() {
 		System.out.println("조회할 연락처의 순번을 입력하세요>>>");
 		int index = Integer.parseInt(scanner.nextLine());
-		contacts[index].printInfo();
+		
+		if(0 <= index && index < count) contacts[index].printInfo();
+		else System.out.println("해당 순번에는 연락처 정보가 없습니다.");
 
 	}
 	
@@ -94,9 +98,18 @@ public class ContactMain01 {
 		System.out.println("수정할 연락처의 순번을 입력하세요>>>");
 		int index = Integer.parseInt(scanner.nextLine());
 		
+		if(index < 0 || index >= count) {
+			System.out.println("해당 순번에는 연락처 정보가 없습니다."); 
+			return; // 메서드 종료
+		}
+		
+		
+		System.out.print("수정 전:");
+		contacts[index].printInfo();
+		
 		System.out.println("수정할 연락처의 정보를 입력하세요>>>");
 		System.out.print("이름 입력>");
-		String name = scanner.nextLine(); // 공백을 포함해서 엔터키 입력될 때까지 모든 문자열을 읽음.
+		String name = scanner.nextLine(); 
 		System.out.println("전화번호 입력> ");
 		String phone = scanner.nextLine();
 		System.out.println("이메일을 입력> ");
@@ -105,17 +118,49 @@ public class ContactMain01 {
 		Contact c = new Contact(0, name, phone, email);
 		contacts[index] = c;
 		
+		System.out.println("수정 후: ");
+		contacts[index].printInfo();
+		
 	}
 	
-	public void IndexDelete() {
+	public void deleteContactByIndex() {
+//		System.out.println();
+//    	System.out.println("--- 연락처 삭제 ---");
+//    	System.out.print("삭제할 연락처 인덱스 입력>>>");
+//    	int index = Integer.parseInt(scanner.nextLine());
+//    	
+//    	for(int i=index; i < count - 1; i++) {
+//    		contacts[i] = contacts[i + 1]; // 뒷쪽 연락처 정보를 한칸 앞으로...
+//    	}
+//    	
+//    	contacts[count - 1] = null; // 삭제 전 배열의 마지막 원소를 null
+//    	count--; // 배열 원소 개수를 1 줄임.
+//    	
+//    	System.out.println("삭제 성공");
+    	
 		System.out.println("삭제할 연락처의 순번을 입력하세요>>>");
 		int index = Integer.parseInt(scanner.nextLine());
 		
-		Contact c = new Contact(0, null, null, null);
-		contacts[index] = c;
+		if(index < 0 || index >= count) {
+			System.out.println("해당 순번에는 연락처 정보가 없습니다."); 
+			return; // 메서드 종료
+		}
 		
+		Contact c = new Contact();
+
+		for(int i=index; i<count; i++) {
+			if(i != count-1) {
+				contacts[i] = contacts[i+1]; 
+			} else contacts[i] = c;
+		}
+		count--;
 		
 	}
+//		Contact c = new Contact();
+//		contacts[index] = c;
+		
+		
+	
 	
 	public int showMainMenu() {
 		System.out.println();
