@@ -35,14 +35,22 @@ public class User {
 	// toString() override: "User(userId=..., password=...)"
 	@Override
 	public String toString() {
+//		return String.format("User(userId= %s, password= %s)%n", userId, password);
+
 		return "User(userId=" + userId + ", password=" + password + ")";
 	}
 
 	// equals() override: 두 객체의 userId가 같으면 true, 그렇지 않으면 false. 
 	// hashCode() override
 	@Override
+	// equals()의 리턴 값이 true이면 hashCode()의 리턴 값이 같다.
 	public int hashCode() {
-		return Objects.hash(userId);
+//		return Objects.hash(userId);
+		if(this.userId == null) {
+			return 0;
+		} else {
+			return this.userId.hashCode();
+		}
 	
 	}
 
@@ -50,7 +58,7 @@ public class User {
 	public boolean equals(Object obj) {
 		if(obj instanceof User) {
 			User other = (User)obj;
-			return this.userId.equals(other.userId) ? true : false; 
+			return (this.userId != null) && (this.userId.equals(other.userId)) ? true : false; 
 		} 
 		return false;
 	}
