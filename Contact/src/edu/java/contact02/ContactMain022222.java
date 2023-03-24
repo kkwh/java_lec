@@ -19,24 +19,26 @@ public class ContactMain022222 {
         
         boolean run = true;
         while (run) {
-            int menu = app.showMainMenu();
+            int n = app.showMainMenu();
+            Menu menu = Menu.getValue(n);
+            
             switch (menu) {
-            case 0: // 프로그램 종료
+            case QUIT: // 프로그램 종료
                 run = false;
                 break;
-            case 1: // 새 연락처 저장
+            case CREATE: // 새 연락처 저장
                 app.insertNewContact();
                 break;
-            case 2: // 연락처 전체 목록 보여주기
+            case READ_ALL: // 연락처 전체 목록 보여주기
                 app.selectAllContacts();
                 break;
-            case 3: // 배열의 인덱스로 연락처 검색하기
+            case READ_BY_INDEX: // 배열의 인덱스로 연락처 검색하기
                 app.selectContactByIndex();
                 break;
-            case 4: // 연락처 이름/전화번호/이메일 정보 수정하기
+            case UPDATE: // 연락처 이름/전화번호/이메일 정보 수정하기
                 app.updateContactByIndex();
                 break;
-            case 5: // 배열의 인덱스로 연락처 삭제하기.
+            case DELETE: // 배열의 인덱스로 연락처 삭제하기.
                 app.deleteContactByIndex();
                 break;
             default:
@@ -51,7 +53,7 @@ public class ContactMain022222 {
         System.out.println();
         System.out.println("--- 연락처 삭제 ---");
         System.out.print("삭제할 연락처 인덱스 입력> ");
-        int index = inputInteger();
+        int index = inputNumber();
         
         if (index < 0 || index >= count) {
             System.out.println("해당 인덱스에는 연락처 정보 없음...");
@@ -72,7 +74,7 @@ public class ContactMain022222 {
         System.out.println();
         System.out.println("--- 연락처 수정 ---");
         System.out.print("수정할 연락처 인덱스 입력> ");
-        int index = inputInteger();
+        int index = inputNumber();
         
         if (index < 0 || index >= count) {
             System.out.println("해당 인덱스에는 연락처 정보 없음...");
@@ -80,7 +82,7 @@ public class ContactMain022222 {
         }
         
         System.out.print("수정 전: ");
-        contacts[index].printInfo(); // 수정 전의 연락처 정보를 출력
+        System.out.println(contacts[index]); // 수정 전의 연락처 정보를 출력
         
         System.out.print("수정할 이름 입력> ");
         String name = scanner.nextLine();
@@ -97,17 +99,17 @@ public class ContactMain022222 {
 //        contacts[index] = new Contact(0, name, phone, email);
         
         System.out.print("수정 후: ");
-        contacts[index].printInfo();
+        System.out.println(contacts[index]);
     }
 
     public void selectContactByIndex() {
         System.out.println();
         System.out.println("--- 인덱스 검색 ---");
         System.out.print("검색할 인덱스 입력> ");
-        int index = inputInteger();
+        int index = inputNumber();
         
         if (index >= 0 && index < count) {
-            contacts[index].printInfo();
+        	System.out.println(contacts[index]);
         } else {
             System.out.println("해당 인덱스에는 연락처 정보가 없음...");
         }
@@ -118,7 +120,7 @@ public class ContactMain022222 {
         System.out.println();
         System.out.println("--- 연락처 목록 ---");
         for (int i = 0; i < count; i++) {
-            contacts[i].printInfo();
+        	System.out.println(contacts[i]);
         }
     }
     
@@ -159,29 +161,22 @@ public class ContactMain022222 {
         System.out.print("선택> ");
         
         // 콘솔 창에서 입력된 문자열 1개 라인을 정수(int)로 변환.
-        int result = inputInteger();
+        int result = inputNumber();
         
         return result;
     }
     
-    public static int inputInteger() {
-		// TODO Scanner를 사용해서 입력받은 정수를 리턴.
-		// Integer.parseInt(scanner.nextLine()) 과정에서 NumberFormatException이 발생할 수 있음.
-		
-		int s = 0;
-		while(true) {
-//			System.out.println("정수를 입력하세요>>> ");
-			
+    public static int inputNumber() {
+		while(true) {		
 			try {
-				 s = Integer.parseInt(scanner.nextLine());
+				int s = Integer.parseInt(scanner.nextLine());
 				
-				break;
+				return s; // return: (1) 값을 메서드 호출한 곳에 반환. (2) 메서드 종료.
 
 			} catch (NumberFormatException e) {
-				System.out.println("번호를 다시 입력하세요. ");
+				System.out.print("번호를 다시 입력하세요> ");
 			}
 		}
-		return s;
 	} 
 
 }
