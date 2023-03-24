@@ -17,7 +17,7 @@ public class Post {
 		this.title = title;
 		this.content = content;
 		this.author = author;
-		
+		this.createdTime = createdTime;
 	}
 
 	public String getTitle() {

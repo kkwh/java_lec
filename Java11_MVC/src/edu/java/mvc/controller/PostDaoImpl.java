@@ -1,5 +1,7 @@
 package edu.java.mvc.controller;
 
+import java.time.LocalDateTime;
+
 import edu.java.mvc.model.Post;
 
 public class PostDaoImpl implements PostDao {
@@ -19,6 +21,8 @@ private static PostDaoImpl instance = null;
 	private static final int MAX_LENGTH = 2; 
 	private Post[] posts = new Post[MAX_LENGTH]; 
 	private int count = 0; 
+	Post post = new Post();
+	LocalDateTime now = LocalDateTime.now();
 	
 	/**
 	 * 블로그 배열에 새로운 블로그 객체를 저장할 수 있는 지를 리턴.
@@ -42,6 +46,9 @@ private static PostDaoImpl instance = null;
 		if(isMeomoryAvailable()) {
 			posts[count] = c;
 			count++;
+						
+			post.setCreatedTime(now);
+			post.setModifiedTime(now);
 			
 			return 1;
 		} else {
@@ -58,12 +65,15 @@ private static PostDaoImpl instance = null;
 			array[i] = posts[i];
 		}
 		
+		post.setModifiedTime(now);
+		
 		return array;
 	}
 
 	@Override
 	public Post read(int index) {
 		if(isValidIndex(index)) {
+			post.setModifiedTime(now);
 			return posts[index];
 		} else {
 			return null;
@@ -76,6 +86,8 @@ private static PostDaoImpl instance = null;
 			posts[index].setTitle(post.getTitle());
 			posts[index].setContent(post.getContent());
 			posts[index].setAuthor(post.getAuthor());
+			
+			post.setModifiedTime(now);
 			
 			return 1;
 		} else {
@@ -95,7 +107,8 @@ private static PostDaoImpl instance = null;
 		}
 		posts[count - 1] = null;
 		count--;
-
+		post.setModifiedTime(now);
+		
 		return 1;
 	}
 }
