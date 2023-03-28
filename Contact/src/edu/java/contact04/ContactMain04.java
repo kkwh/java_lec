@@ -128,11 +128,6 @@ public class ContactMain04 {
 	private void insertNewContact() {
 		System.out.println("\n----- 새 연락처 저장 -----");
 		
-//		if(!dao.isMeomoryAvailable()) { // 배열에 빈 공간이 없으면
-//			System.out.println(">>> 연락처를 저장할 공간이 부족합니다.");
-//			return; // 메서드 종료
-//		}
-		
 		System.out.print("이름 입력> ");
 		String name = scanner.nextLine();
 		System.out.print("전화번호 입력> ");

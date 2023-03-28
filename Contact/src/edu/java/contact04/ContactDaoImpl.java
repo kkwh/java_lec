@@ -41,15 +41,13 @@ public class ContactDaoImpl implements ContactDao {
 	
 	// CRUD(Create, Read, Update, Delete) 기능 메서드들:
 	@Override
-	public int create(Contact c) { 
-		if(c == null) return 0;
-		
+	public int create(Contact c) { 		
 		contacts.add(c);
 		return 1;
 	}
 
 	@Override
-	public List read() {
+	public List<Contact> read() {
 			
 		return contacts;
 	}
@@ -60,16 +58,16 @@ public class ContactDaoImpl implements ContactDao {
 			return contacts.get(index);
 		} else {
 			return null;
-		}
-		
+		}		
 	}
 
 	@Override
 	public int update(int index, Contact contact) {
 		if(isValidIndex(index)) {
-			contacts.get(index).setName(contact.getName());
-			contacts.get(index).setPhone(contact.getPhone());
-			contacts.get(index).setEmail(contact.getEmail());
+//			contacts.get(index).setName(contact.getName());
+//			contacts.get(index).setPhone(contact.getPhone());
+//			contacts.get(index).setEmail(contact.getEmail());
+			contacts.set(index, contact);
 			
 			return 1;
 		} else {
