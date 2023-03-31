@@ -1,11 +1,13 @@
 package edu.java.contact.model;
 
+import java.io.Serializable;
+
 // MVC(Model-View-Controller) 아키텍쳐에서 Modeld에 해당하는 클래스.
 // 특별한 기능은 없는, 순수하게 데이터만 설계하는 클래스.
 // VO(Value Object): 값(자료)를 표현하는 객체.
 // DTO(Data Transfer Object): 데이터를 전달(메서드 아규먼트, 리턴 값)할 때 사용되는 객체.
 
-public class Contact {
+public class Contact implements Serializable {
 	private int cid;
 	private String name;
 	private String phone;
