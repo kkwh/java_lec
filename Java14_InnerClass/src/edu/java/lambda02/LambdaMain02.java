@@ -22,6 +22,7 @@ public class LambdaMain02 {
 		System.out.println();
 		
 		numbers.forEach(i -> System.out.print(i + " "));
+
 		System.out.println();
 		
 		// 리스트 numbers에서 짝수들만 선택해서 새로운 리스트에 저장하고 출력.
@@ -48,7 +49,7 @@ public class LambdaMain02 {
 		for(Integer i : numbers) {
 			if(i % 2 != 0) oddSquares.add(i * i);
 		}
-		System.out.println(oddSquares);	
+		System.out.println(oddSquares);
 		
 		List<Integer> oddSquares2 = numbers.stream() // 리스트의 원소들이 순서대로 지나가는 통로
 				.filter(x -> x % 2 != 0 ) // 조건을 만족하는 원소들만 필터링
