@@ -69,7 +69,7 @@ public class AppMain04 {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					lblImage.setIcon(imgs[--count]);
-					lblX.setText("");
+//					lblX.setText("");
 				} catch (ArrayIndexOutOfBoundsException e1) {
 //					lblImage.setIcon(new ImageIcon("./images/x.jpg"));
 //					lblX.setText("범위 초과");
@@ -90,7 +90,7 @@ public class AppMain04 {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					lblImage.setIcon(imgs[++count]);
-					lblX.setText("");
+//					lblX.setText("");
 				} catch (ArrayIndexOutOfBoundsException e1) {
 //					lblImage.setIcon(new ImageIcon("./images/x.jpg"));
 //					lblX.setText("범위 초과");
