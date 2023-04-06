@@ -20,7 +20,7 @@ public class AppMain07 {
 	private static final String[] COLUMN_NAMES = {"국어", "영어", "수학", "총점", "평균"};
 	
 	private DefaultTableModel model; // 테이블의 행, 열에 대한 정보를 갖는 객체
-	private JFrame frame;
+	JFrame frame;
 	private JLabel lblKorean;
 	private JTextField textKorean;
 	private JTextField textEnglish;
@@ -174,11 +174,12 @@ public class AppMain07 {
 			score.setMath(math);				
 			Object[] rows = { score.getKorean(), score.getEnglish(), score.getMath(), score.getTotal(), score.getMean()};
 			model.addRow(rows);
+			clearText();
 
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(
 					frame, 
-					"다시 입력해주세요.",
+					"다시 입력해주세요: " + e1.getMessage(),
 					"메시지", 
 					JOptionPane.ERROR_MESSAGE);
 			return;
@@ -188,7 +189,13 @@ public class AppMain07 {
 	private void delete() {
 		int row = table.getSelectedRow();
 		try { 
-			model.removeRow(row);
+			int confirm = JOptionPane.showConfirmDialog(
+					frame,
+					"정말로 삭제하시겠습니까?",
+					"알림",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
+			if(confirm == JOptionPane.YES_OPTION) model.removeRow(row);
 		} catch (Exception e1) {
 			try{
 				model.removeRow(0);
@@ -200,5 +207,11 @@ public class AppMain07 {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	private void clearText() {
+		textKorean.setText("");
+		textEnglish.setText("");
+		textMath.setText("");
 	}
 }

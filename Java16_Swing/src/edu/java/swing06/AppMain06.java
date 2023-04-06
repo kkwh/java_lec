@@ -132,7 +132,7 @@ public class AppMain06 {
 		btnCustomDlg.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MyDialog.showMyDialog(null);
+				MyDialog.showMyDialog(frame);
 			}
 		});
 		btnCustomDlg.setFont(new Font("D2Coding", Font.PLAIN, 32));
