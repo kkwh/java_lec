@@ -69,7 +69,7 @@ values (1234567); -- 컬럼 자릿수보다 더 큰 수를 insert하려는 에�
 -- ORA-01438: 이 열에 대해 지정된 전체 자릿수보다 큰 값이 허용됩니다
 
 insert into students (stuname)
-values('abcdefghijk');
+values('abcdefghijk'); -- 컬럼에서 지정한 문자열 길이보다 더 긴 문자열.
 -- ORA-12899: "SCOTT"."STUDENTS"."STUNAME" 열에 대한 값이 너무 큼(실제: 11, 최대값: 10)
 
 select * from students;
@@ -77,4 +77,64 @@ select * from students;
 commit; -- 현재까지 작업 내용을 DB에 영구 저장.
 
 -- 테이블 생성할 때 컬럼의 기본값 설정하기:
+create table ex_user (
+    no              number(4), -- 0~9999
+    userid          varchar2(20), -- 20 바이트까지의 문자열.
+    password        varchar2(100),
+    age             number(3) default 0,
+    created_date    date default sysdate
+);
 
+insert into ex_user (no, userid, password)
+values (1, 'guest', 'guest0000');
+--> default 값이 설정된 컬럼들은 insert하지 않으면 기본값이 insert됨.
+
+insert into ex_user(userid, password)
+values ('admin', 'admin0000');
+--> default 값이 설정되지 않은 컬럼들은 insert 하지 않으면 null됨.
+
+select * from ex_user;
+commit;
+
+-- 제약 조건: (1) primary key(고유키). (2) not null. (3) unique. (4)check. (5)foreign key(외부키)
+create table ex1 (
+    col1 number(2)  
+         primary key,       -- null이 아니고, 유일한(중복X) 값 -> 유일한 행 1개를 검색.
+    col2 varchar2(100) 
+         not null,          -- 반드시 값이 insert되어야 함.
+    col3 varchar2(100) 
+         unique,            -- 중복되지 않은 유일한 값만 허용.
+    col4 number(2)     
+         check(col4 >= 0),  -- 조건을 만족하는 값만 insert를 허용.
+    col5 number(2)
+);
+
+insert into ex1
+values (1, '홍길동', 'test', 10, 0); 
+
+insert into ex1(col1, col2)
+values (1, '홍길동');
+--> PK 제약조건 위배: 중복되는 값이어서.
+
+insert into ex1(col2)
+values ('홍길동');
+--> PK 제약조건 위배: PK는 null이 되면 안됨.
+
+insert into ex1(col1, col2)
+values (2, '김길동');
+
+insert into ex1(col1)
+values(3);
+--> col2가 NOT NULL이라는 제약조건을 위배.
+
+insert into ex1(col1, col2, col3)
+values (3, '홍길동', 'test');
+--> col3은 중복된 값을 허용하지 않는다(unique)는 제약조건에 위배.
+
+insert into ex1(col1, col2, col4)
+values (3, '홍길동', -1);
+--> col4 >= 0 제약조건에 위배.
+
+select * from ex1;
+
+commit;
