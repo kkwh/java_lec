@@ -28,16 +28,12 @@ public class JbdcMain04 {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			
 			String sql = String.format("delete from %s where %s = ?",
-					TBL_NAME, COL_ID);
-			
-			System.out.println(sql);
-			
+					TBL_NAME, COL_ID);			
+			System.out.println(sql);			
 			stmt = conn.prepareStatement(sql);
 			
-			System.out.print("삭제할 글 번호>>>");
-			
-			Integer id = Integer.parseInt(scanner.nextLine());
-			
+			System.out.print("삭제할 글 번호>>>");			
+			Integer id = Integer.parseInt(scanner.nextLine());			
 			stmt.setInt(1, id);
 			
 			int result = stmt.executeUpdate();
